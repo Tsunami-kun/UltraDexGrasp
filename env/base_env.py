@@ -382,7 +382,7 @@ class BaseEnv:
             else:
                 orientation = R.from_euler('xyz', np.array([np.random.choice([0.0, np.pi/2, np.pi, np.pi*3/2]), np.random.choice([0.0, np.pi/2, np.pi, np.pi*3/2]), np.random.choice([0.0, np.pi/2, np.pi, np.pi*3/2]) + np.random.uniform(-np.pi / 12, np.pi / 12)])).as_quat(scalar_first=True)
             # orientation = R.from_euler('xyz', np.array([0.0, 0.0, np.random.uniform(-np.pi / 12, np.pi / 12)])).as_quat(scalar_first=True)
-        orientation = [1.0, 0.0, 0.0, 0.0]
+        # orientation = [1.0, 0.0, 0.0, 0.0]
 
         object_mesh = trimesh.load(self.object_mesh_path)
         object_pose_tmp = np.eye(4)
