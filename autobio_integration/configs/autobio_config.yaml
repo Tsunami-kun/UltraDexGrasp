@@ -1,0 +1,106 @@
+# AutoBio-in-SAPIEN3 Configuration
+# All paths are overrideable via env vars:
+# AUTOBIO_ROOT, ULTRADEX_ROOT, AUTOBIO_PROCESSED_ASSETS, AUTOBIO_DEMO_OUTPUT,
+# AUTOBIO_GPU_ID, AUTOBIO_NUM_CPU_WORKERS, DISPLAY
+
+paths:
+  autobio_root: ../../../AutoBio
+  ultradex_root: ../..
+  processed_assets: ../assets/processed
+  demo_output: ../demos
+
+devices:
+  gpu_id: 0
+  display: ""
+  headless: true
+  num_cpu_workers: 4
+
+# Physics
+timestep: 0.001
+table_height: 0.714
+gravity: [0, 0, -9.81]
+
+# Robot configuration (UR5e + XHand from UltraDexGrasp)
+robot:
+  asset_root: ../../asset
+  left_arm:
+    urdf: ur5e_with_xhand_urdf_offset_sim2real/ur5e_with_xhand_left_limited_joint_sapien.urdf
+    pos: [0.0, 0.45, 0.714]
+    curobo_config: ur5e_with_xhand_urdf_offset_sim2real/ur5e_with_xhand_left.yaml
+    ik_config: ur5e_with_xhand_urdf_offset_sim2real/ur5e_with_base_left.yaml
+  right_arm:
+    urdf: ur5e_with_xhand_urdf_offset_sim2real/ur5e_with_xhand_right_limited_joint_sapien.urdf
+    pos: [0.0, -0.45, 0.714]
+    curobo_config: ur5e_with_xhand_urdf_offset_sim2real/ur5e_with_xhand_right.yaml
+    ik_config: ur5e_with_xhand_urdf_offset_sim2real/ur5e_with_base_right.yaml
+
+# Grasp synthesis (BODex)
+grasp:
+  hand_type: xhand
+  hand_dof: 12
+  seed_num: 500
+  batch_size: 64
+
+# Motion planning (cuRobo)
+planning:
+  position_threshold: 0.001
+  rotation_threshold: 0.01
+  trajectory_timesteps: 32
+
+# Parallel execution
+parallel:
+  num_cpu_workers: 16
+  gpu_id: 0
+
+# Tasks
+tasks:
+  pickup_tube:
+    difficulty: easy
+    method: grasp_synthesis  # BODex + cuRobo
+    num_episodes: 1000
+    max_synth_grasps: 128
+    max_plan_attempts: 6
+    objects:
+      - centrifuge_50ml
+    instruments: []
+
+  thermal_cycler_close:
+    difficulty: medium
+    method: scripted_manipulation  # Articulation control
+    num_episodes: 500
+    objects: []
+    instruments:
+      - thermal_cycler_biorad_c1000
+
+  centrifuge_lid_open_mini:
+    difficulty: easy
+    method: scripted_manipulation
+    num_episodes: 500
+    objects: []
+    instruments:
+      - centrifuge_tiangen_tgear_mini
+
+  centrifuge_lid_open_5430:
+    difficulty: medium
+    method: scripted_manipulation
+    num_episodes: 500
+    objects: []
+    instruments:
+      - centrifuge_eppendorf_5430
+
+# Mesh processing
+mesh_processing:
+  coacd_threshold: 0.05  # Convex decomposition threshold
+  simplify_vert_num: 2000  # Target vertices for simplified mesh
+  max_workers: 8  # Parallel mesh processing workers
+  manifest:
+    instruments:
+      thermal_cycler_biorad_c1000:
+        links: [body, lid, lid-lever, lid-force-knob, reaction-block]
+      centrifuge_tiangen_tgear_mini:
+        links: [body, lid, rotor]
+      centrifuge_eppendorf_5430:
+        links: [body, lid, rotor]
+    simple_objects:
+      - container/centrifuge_50ml
+      - rack/centrifuge_10slot

@@ -1,0 +1,129 @@
+{
+  "release_tag": "release_20260327_readme_cli",
+  "canonical_storage_root": "artifacts/releases/release_20260327_readme_cli",
+  "verified_on": "2026-03-27T15:56:09.481773+00:00",
+  "verified_files": 17,
+  "all_retrievable": true,
+  "all_sha256_match": true,
+  "files": [
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/bootstrap.log",
+      "exists": true,
+      "expected_sha256": "dee2b5323466d7f678c80c235cffc647d00843d57061096e9e528ffed533563b",
+      "actual_sha256": "dee2b5323466d7f678c80c235cffc647d00843d57061096e9e528ffed533563b",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/process.log",
+      "exists": true,
+      "expected_sha256": "f676802b76177ae35d736691ca7efb620dfbb39ced48a714ea4d3df254c6640f",
+      "actual_sha256": "f676802b76177ae35d736691ca7efb620dfbb39ced48a714ea4d3df254c6640f",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/process.checksums.json",
+      "exists": true,
+      "expected_sha256": "ddd696abef116bc3babf70cebf1fb2645fa5439544cd253c3cadab5caafa56bc",
+      "actual_sha256": "ddd696abef116bc3babf70cebf1fb2645fa5439544cd253c3cadab5caafa56bc",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/checksum-compare.txt",
+      "exists": true,
+      "expected_sha256": "25ac376467a69b74dd238cbc8892d898589b377339e9a49597abbca6ca9d392c",
+      "actual_sha256": "25ac376467a69b74dd238cbc8892d898589b377339e9a49597abbca6ca9d392c",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/generate.log",
+      "exists": true,
+      "expected_sha256": "65b739ad302657dafcebcabdcce282e5f636fea092e1f5bfbb3b07787e98aa7a",
+      "actual_sha256": "65b739ad302657dafcebcabdcce282e5f636fea092e1f5bfbb3b07787e98aa7a",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/evaluate.log",
+      "exists": true,
+      "expected_sha256": "0857395393d81844cd36cf468756a4e7789d290b3607595d256a5e14e02fc52b",
+      "actual_sha256": "0857395393d81844cd36cf468756a4e7789d290b3607595d256a5e14e02fc52b",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/latest_run.txt",
+      "exists": true,
+      "expected_sha256": "e6054936e4e405ba645170d7439384a7c0161451c31b56c471106f705d147c83",
+      "actual_sha256": "e6054936e4e405ba645170d7439384a7c0161451c31b56c471106f705d147c83",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/demos/thermal_cycler_close/20260327_232803/summary.json",
+      "exists": true,
+      "expected_sha256": "e42160864adaf4b10c34956fa7b6443c97bdbe0e49ee9e3e1de1c840eade4cb8",
+      "actual_sha256": "e42160864adaf4b10c34956fa7b6443c97bdbe0e49ee9e3e1de1c840eade4cb8",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/demos/thermal_cycler_close/20260327_232803/metadata.json",
+      "exists": true,
+      "expected_sha256": "6d1330091745e2d49d67033d79b323407e1f37df0d7b6ccc7b8894bdde2f572d",
+      "actual_sha256": "6d1330091745e2d49d67033d79b323407e1f37df0d7b6ccc7b8894bdde2f572d",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/demos/thermal_cycler_close/20260327_232803/config.json",
+      "exists": true,
+      "expected_sha256": "651544bcd4a4f6ef0bee5bfbc83a0de791394941c78a123a73b554b4cb61e1cb",
+      "actual_sha256": "651544bcd4a4f6ef0bee5bfbc83a0de791394941c78a123a73b554b4cb61e1cb",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/demos/thermal_cycler_close/20260327_232803/episodes/episode_000000/episode.json",
+      "exists": true,
+      "expected_sha256": "4ec59c6eebaa496d0b9ef000b5f2db951d0cff427cebc9df1ba91f4e9eb76820",
+      "actual_sha256": "4ec59c6eebaa496d0b9ef000b5f2db951d0cff427cebc9df1ba91f4e9eb76820",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/demos/thermal_cycler_close/20260327_232803/episodes/episode_000000/info.json",
+      "exists": true,
+      "expected_sha256": "4ec59c6eebaa496d0b9ef000b5f2db951d0cff427cebc9df1ba91f4e9eb76820",
+      "actual_sha256": "4ec59c6eebaa496d0b9ef000b5f2db951d0cff427cebc9df1ba91f4e9eb76820",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/pip-freeze.txt",
+      "exists": true,
+      "expected_sha256": "0e70b29f1aa2a5c323f1aa6fcb04eb3d20dac5d9d6e0444fb0594160f66956f8",
+      "actual_sha256": "0e70b29f1aa2a5c323f1aa6fcb04eb3d20dac5d9d6e0444fb0594160f66956f8",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/requirements.txt",
+      "exists": true,
+      "expected_sha256": "bf62e53bc15177511e238dc57a0586949cefa7ae5136d11e5f7652d73da5c7fc",
+      "actual_sha256": "bf62e53bc15177511e238dc57a0586949cefa7ae5136d11e5f7652d73da5c7fc",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/requirements-dexterous.txt",
+      "exists": true,
+      "expected_sha256": "313fa68118e9bf8e9718c3b84948c59f45b22160429338734b9a8c68ea1071a6",
+      "actual_sha256": "313fa68118e9bf8e9718c3b84948c59f45b22160429338734b9a8c68ea1071a6",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/environment.yml",
+      "exists": true,
+      "expected_sha256": "949bee9db2ea20813bbb1262b6e1100eb2a7c72010d9eefb51e4c44d41a94eda",
+      "actual_sha256": "949bee9db2ea20813bbb1262b6e1100eb2a7c72010d9eefb51e4c44d41a94eda",
+      "match": true
+    },
+    {
+      "path": "artifacts/releases/release_20260327_readme_cli/environment.dexterous.yml",
+      "exists": true,
+      "expected_sha256": "75ad738ddc44dd7182711b4fb38d38c9ba5b4407c3e6adeeba06017af01e387d",
+      "actual_sha256": "75ad738ddc44dd7182711b4fb38d38c9ba5b4407c3e6adeeba06017af01e387d",
+      "match": true
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "latest_release_tag": "release_20260327_readme_cli",
+  "updated_on": "2026-03-27T16:22:24.476719+00:00",
+  "releases": [
+    {
+      "release_tag": "release_20260327_readme_cli",
+      "canonical_storage_root": "artifacts/releases/release_20260327_readme_cli",
+      "manifest": "artifacts/releases/release_20260327_readme_cli/release_manifest.json",
+      "retrieval_verification": "artifacts/releases/release_20260327_readme_cli/retrieval_verification.json",
+      "approval": "artifacts/releases/release_20260327_readme_cli/release_approval.json",
+      "source_release_candidate": "rc_20260327_readme_cli",
+      "approval_status": "approved",
+      "all_retrievable": true,
+      "all_sha256_match": true
+    }
+  ]
+}

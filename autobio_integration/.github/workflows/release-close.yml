@@ -1,0 +1,69 @@
+name: release-close
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_fail_after_check:
+        description: "Force a post-check failure to verify log surfacing"
+        required: false
+        default: false
+        type: boolean
+  push:
+    tags:
+      - "release_*"
+    paths:
+      - "artifacts/releases/**"
+      - "scripts/release_close_check.py"
+      - "scripts/release_close_ci.sh"
+      - "cli.py"
+      - "README.md"
+  pull_request:
+    paths:
+      - "artifacts/releases/**"
+      - "scripts/release_close_check.py"
+      - "scripts/release_close_ci.sh"
+      - "cli.py"
+      - "README.md"
+
+jobs:
+  release-close-gate:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_CLOSE_FORCE_FAIL_AFTER_CHECK: ${{ inputs.force_fail_after_check && '1' || '0' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install lightweight runtime dependency
+        run: python -m pip install --quiet PyYAML
+
+      - name: Run release-close gate
+        id: release_close_gate
+        run: bash scripts/release_close_ci.sh
+
+      - name: Publish consumer log on failure
+        if: failure()
+        run: |
+          LATEST_TAG="$(tr -d '\r\n' < artifacts/releases/LATEST)"
+          LOG_FILE="artifacts/releases/${LATEST_TAG}/release_close_check.log"
+          echo "Release-close gate failed. Consumer log path: ${LOG_FILE}"
+          if [[ -f "${LOG_FILE}" ]]; then
+            echo "--- begin consumer log ---"
+            cat "${LOG_FILE}"
+            echo "--- end consumer log ---"
+          else
+            echo "Consumer log not found"
+          fi
+
+      - name: Upload consumer log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-close-consumer-log
+          path: artifacts/releases/*/release_close_check.log
+          if-no-files-found: warn

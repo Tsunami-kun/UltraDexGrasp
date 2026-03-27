@@ -1,0 +1,14 @@
+{
+  "release_tag": "release_20260327_readme_cli",
+  "source_release_candidate": "rc_20260327_readme_cli",
+  "approval_status": "approved",
+  "approved_by_role": "reviewer",
+  "approval_recorded_on": "2026-03-27T15:54:59.791430+00:00",
+  "session_id": "019d2e01-c0f9-7041-b8f2-478cb1eccf96",
+  "approval_basis": [
+    "Reviewer has already marked the task DONE.",
+    "Acceptance checks have passed.",
+    "Published release bundle verified from canonical storage location."
+  ],
+  "notes": "No named human approver was provided in the task context; approval metadata records the explicit reviewer-approved state supplied to the agent."
+}
