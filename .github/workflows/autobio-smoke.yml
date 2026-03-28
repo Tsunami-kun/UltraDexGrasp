@@ -1,0 +1,87 @@
+name: autobio-smoke
+
+on:
+  push:
+    paths:
+      - "autobio_integration/cli.py"
+      - "autobio_integration/runtime.py"
+      - "autobio_integration/scripts/smoke_test.py"
+      - "autobio_integration/scripts/smoke_ci_gate.py"
+      - "autobio_integration/scripts/assert_run_consistency.py"
+      - "autobio_integration/scripts/bootstrap_clean_env.sh"
+      - "autobio_integration/tests/test_assert_run_consistency.py"
+      - "autobio_integration/tests/fixtures/smoke_ci_fixture/**"
+      - "autobio_integration/README.md"
+  pull_request:
+    paths:
+      - "autobio_integration/cli.py"
+      - "autobio_integration/runtime.py"
+      - "autobio_integration/scripts/smoke_test.py"
+      - "autobio_integration/scripts/smoke_ci_gate.py"
+      - "autobio_integration/scripts/assert_run_consistency.py"
+      - "autobio_integration/scripts/bootstrap_clean_env.sh"
+      - "autobio_integration/tests/test_assert_run_consistency.py"
+      - "autobio_integration/tests/fixtures/smoke_ci_fixture/**"
+      - "autobio_integration/README.md"
+  workflow_dispatch:
+    inputs:
+      force_gate_failure_mode:
+        description: "Force the smoke gate to fail with a diagnostic failure mode"
+        required: false
+        default: "none"
+        type: choice
+        options:
+          - none
+          - missing_trajectory
+          - metadata_seed_mismatch
+
+jobs:
+  autobio-smoke-gate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: autobio_integration
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install lightweight dependency
+        run: python -m pip install --quiet PyYAML
+
+      - name: Run consistency regression tests
+        run: python -m unittest tests.test_assert_run_consistency -v
+
+      - name: Run smoke/CI gate
+        run: |
+          set -o pipefail
+          mkdir -p artifacts/ci
+          EXTRA_ARGS=()
+          if [[ "${{ inputs.force_gate_failure_mode || 'none' }}" != "none" ]]; then
+            EXTRA_ARGS+=(--force-gate-failure-mode "${{ inputs.force_gate_failure_mode }}")
+          fi
+          python cli.py smoke-ci-gate "${EXTRA_ARGS[@]}" 2>&1 | tee artifacts/ci/autobio-smoke-gate.log
+
+      - name: Publish gate log on failure
+        if: failure()
+        run: |
+          echo "autobio-smoke gate failed; log follows"
+          if [[ -f artifacts/ci/autobio-smoke-gate.log ]]; then
+            echo "--- begin autobio-smoke-gate.log ---"
+            cat artifacts/ci/autobio-smoke-gate.log
+            echo "--- end autobio-smoke-gate.log ---"
+          else
+            echo "gate log not found"
+          fi
+
+      - name: Upload gate log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: autobio-smoke-gate-log
+          path: autobio_integration/artifacts/ci/autobio-smoke-gate.log
+          if-no-files-found: warn

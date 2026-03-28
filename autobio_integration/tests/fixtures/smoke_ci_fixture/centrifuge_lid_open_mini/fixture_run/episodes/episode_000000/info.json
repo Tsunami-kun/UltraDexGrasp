@@ -1,0 +1,13 @@
+{
+  "task": "centrifuge_lid_open_mini",
+  "seed": 0,
+  "success": true,
+  "num_steps": 400,
+  "contact_phases": [
+    "approach",
+    "lid_contact",
+    "push_open",
+    "settle"
+  ],
+  "success_metric": "lid_joint_open_threshold"
+}

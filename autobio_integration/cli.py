@@ -157,6 +157,35 @@ def main(argv=None) -> int:
     release_close_parser.add_argument("--release-tag", type=str, default=None)
     release_close_parser.add_argument("--log-file", type=str, default=None)
 
+    smoke_ci_parser = subparsers.add_parser(
+        "smoke-ci-gate",
+        help="Run the lightweight smoke/CI quality gate over a known-good run and one forced failure case",
+    )
+    _common_parent(smoke_ci_parser)
+    smoke_ci_parser.add_argument("--run-dir", type=str, default=None)
+    smoke_ci_parser.add_argument("--expected-episodes", type=int, default=2)
+    smoke_ci_parser.add_argument("--skip-evaluate", action="store_true")
+    smoke_ci_parser.add_argument(
+        "--failure-modes",
+        nargs="+",
+        default=None,
+        choices=["missing_trajectory", "metadata_seed_mismatch"],
+    )
+    smoke_ci_parser.add_argument(
+        "--force-gate-failure-mode",
+        type=str,
+        default=None,
+        choices=["missing_trajectory", "metadata_seed_mismatch"],
+    )
+
+    run_consistency_parser = subparsers.add_parser(
+        "assert-run-consistency",
+        help="Assert one generated task run has consistent summary, metadata, and episode artifacts",
+    )
+    _common_parent(run_consistency_parser)
+    run_consistency_parser.add_argument("--run-dir", type=str, required=True)
+    run_consistency_parser.add_argument("--expected-episodes", type=int, default=None)
+
     args = parser.parse_args(argv)
     if args.config:
         os.environ["AUTOBIO_INTEGRATION_CONFIG"] = str(Path(args.config).resolve())
@@ -323,6 +352,30 @@ def main(argv=None) -> int:
         if args.config:
             cmd += ["--config", str(Path(args.config).resolve())]
         return release_close_check.main(cmd)
+
+    if args.command == "smoke-ci-gate":
+        from scripts import smoke_ci_gate
+
+        cmd = []
+        if args.run_dir:
+            cmd += ["--run-dir", args.run_dir]
+        if args.expected_episodes is not None:
+            cmd += ["--expected-episodes", str(args.expected_episodes)]
+        if args.skip_evaluate:
+            cmd += ["--skip-evaluate"]
+        if args.failure_modes:
+            cmd += ["--failure-modes", *args.failure_modes]
+        if args.force_gate_failure_mode:
+            cmd += ["--force-gate-failure-mode", args.force_gate_failure_mode]
+        return smoke_ci_gate.main(cmd)
+
+    if args.command == "assert-run-consistency":
+        from scripts import assert_run_consistency
+
+        cmd = ["--run-dir", args.run_dir]
+        if args.expected_episodes is not None:
+            cmd += ["--expected-episodes", str(args.expected_episodes)]
+        return assert_run_consistency.main(cmd)
 
     return 1
 

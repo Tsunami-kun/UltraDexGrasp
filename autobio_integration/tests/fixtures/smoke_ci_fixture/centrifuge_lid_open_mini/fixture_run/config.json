@@ -1,0 +1,5 @@
+{
+  "task": "centrifuge_lid_open_mini",
+  "fixture": true,
+  "description": "Checked-in lightweight smoke/CI fixture for artifact consistency validation."
+}
