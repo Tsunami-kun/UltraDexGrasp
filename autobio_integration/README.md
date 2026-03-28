@@ -83,6 +83,15 @@ Run a physics smoke test against the processed assets:
 python cli.py smoke-test
 ```
 
+Run the lightweight smoke/CI quality gate. This re-checks one known-good run
+with `assert-run-consistency`, verifies two intentionally broken copies fail,
+and can also be forced to fail for CI diagnostics:
+
+```bash
+python cli.py smoke-ci-gate
+python cli.py smoke-ci-gate --force-gate-failure-mode metadata_seed_mismatch
+```
+
 Generate a small demo batch for the validated scripted task:
 
 ```bash
@@ -93,6 +102,13 @@ Summarize generated runs:
 
 ```bash
 python cli.py evaluate --task thermal_cycler_close
+```
+
+Assert one generated run is internally consistent across `summary.json`,
+`metadata.json`, and per-episode artifacts:
+
+```bash
+python cli.py assert-run-consistency --run-dir artifacts/<task>/<run_id> --expected-episodes 1
 ```
 
 Run the common task-contract smoke test:
@@ -312,3 +328,18 @@ Repository CI workflow:
 
 The workflow runs the release-close gate on release-related changes and publishes
 the canonical consumer log on failure.
+
+Lightweight smoke/consistency workflow gate:
+
+```bash
+python cli.py smoke-ci-gate
+python -m unittest tests.test_assert_run_consistency -v
+```
+
+Repository smoke workflow:
+
+- [autobio-smoke.yml](/cephfs/shaoyanming/00000_dexbio/UltraDexGrasp/.github/workflows/autobio-smoke.yml)
+
+The smoke workflow runs the lightweight consistency regression tests and then
+executes the shared `python cli.py smoke-ci-gate` quality gate used by the
+bootstrap path.

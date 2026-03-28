@@ -1,0 +1,14 @@
+[
+  {
+    "task": "centrifuge_lid_open_mini",
+    "seed": 0,
+    "success": true,
+    "num_steps": 400
+  },
+  {
+    "task": "centrifuge_lid_open_mini",
+    "seed": 1,
+    "success": true,
+    "num_steps": 400
+  }
+]
